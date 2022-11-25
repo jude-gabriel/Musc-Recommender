@@ -10,7 +10,7 @@ if(ml.is_loaded() == False):
     ml.load_wav()
    
 train, test = fl.getFeatures()
-print(train.shape)
+
 
 # Run k-means
 cl.kmeans(train, test)
