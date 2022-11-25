@@ -1,7 +1,9 @@
-from music21 import converter,instrument # or import *
-file = converter.parse('ACDC.Highway_to_Hell_K.mid')
-components = []
-for element in file.recurse():
-    components.append(element)
+import feature_loader as fl
+import clustering as cl
 
-print(components)
+# Get the train and test data
+train, test = fl.getFeatures()
+print(train.shape)
+
+# Run k-means
+cl.kmeans(train, test)
