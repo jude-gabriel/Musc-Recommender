@@ -11,8 +11,6 @@ if(ml.is_loaded() == False):
    
 train, test = fl.getFeatures()
 print(train.shape)
-    
-
 
 # Run k-means
 cl.kmeans(train, test)
