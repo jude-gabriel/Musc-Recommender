@@ -4,8 +4,6 @@ import clustering as cl
 
 # Get the train and test data
 train, test = fl.getFeatures()
-print(train[:, len(train[0]) - 1])
-print(test[:, len(test[0]) - 1])
 
 
 # Run k-means

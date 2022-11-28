@@ -2,9 +2,17 @@ from sklearn.cluster import KMeans
 import numpy as np
 
 def kmeans(train, test):
-    # Run kmeans on the training set
-    # Todo: how many centroids????
-    kmeans = KMeans(n_clusters=2, random_state=0).fit((train[:, 0:len(train[0]) - 2]).astype(float))
+    # Get the features
+    X = train[:, 0:len(train[0]) - 1].astype(float)
+    X_labels = train[:, len(train[0])-1]
+    Y = test[:, 0:len(train[0]) - 1].astype(float)
+    Y_labels = test[:, len(test[0]) - 1]
+
+    print(X_labels)
+    print(Y_labels)
+
+    # Run kmeans
+    kmeans = KMeans(n_clusters=1300, random_state=0).fit(X)
 
     # Get the list of centroids
     centroids = kmeans.cluster_centers_
@@ -13,35 +21,24 @@ def kmeans(train, test):
     # Measure each clusters density
     # Predict each point in training set
     count = np.zeros(centroids[:, 0].size)
-    for t in train:
-        center = kmeans.predict(np.array([(t[0:len(t)-2]).astype(float)]))
-        print(center.shape)
+    for x in X:
+        center = kmeans.predict(np.array([x]))
         print(center)
-        idx = find_index(center, centroids)
-        count[idx] = count[idx] + 1
+        count[center] = count[center] + 1
 
     # Count how many points per each centroid. Most dense will have most points
-    most_dense = centroids[np.argmax(count)]
-    print(most_dense.shape)
+    most_dense = np.argmax(count)
     print(most_dense)
-
 
     # Predict each item in test set
     recommend = np.array([])
-    for t in test:
-        # If it's centroid is the centroid of the most dense cluster, add it to songs to recommend
-        center = kmeans.predict(np.array([(t[0:len(t) - 2]).astype(float)]))
-        print(center.shape)
+
+    # Predict each song in the test split. If it is in the most dense cluster, add to songs to recommend
+    for i in range(len(Y_labels)):
+        center = kmeans.predict(np.array([Y[i]]))
         print(center)
-        if np.array_equal(center, most_dense):
-            print(True)
-            recommend = np.append(recommend, t[len(t)-2])
+        if center == most_dense:
+            recommend = np.append(recommend, Y_labels[i])
 
     return recommend
 
-
-def find_index(point, centroids):
-    for i in range(centroids[:, 0].size):
-        if np.array_equal(point, centroids[i]):
-            print(i)
-            return i

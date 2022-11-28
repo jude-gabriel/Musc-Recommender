@@ -8,6 +8,7 @@ def load_wav():
 
     # Extract the features
     for file in files:
+        print(file)
         y, sr = librosa.load(file)
 
         # calls function to extract features, 2 feature function exist currently
