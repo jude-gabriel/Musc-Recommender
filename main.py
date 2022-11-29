@@ -7,8 +7,8 @@ import music_loader as ml
 #Checks if feature text file exists,
 #if not creates file from wav
 
-if(ml.is_loaded() == False):
-    ml.load_wav()
+
+#ml.load_wav()
    
 train, test = fl.getFeatures()
 

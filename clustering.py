@@ -1,5 +1,6 @@
 from sklearn.cluster import KMeans
 import numpy as np
+from matplotlib import pyplot as plt
 
 def kmeans(train, test):
     # Get the features
@@ -12,8 +13,11 @@ def kmeans(train, test):
     print(Y_labels)
 
     # Run kmeans
-    kmeans = KMeans(n_clusters=1300, random_state=0).fit(X)
-
+    kmeans = KMeans(n_clusters=3, random_state=0).fit(X)
+    labels = kmeans.fit_predict(X)
+    
+    plotClusters(X,labels)
+    
     # Get the list of centroids
     centroids = kmeans.cluster_centers_
     print(kmeans.labels_)
@@ -40,5 +44,19 @@ def kmeans(train, test):
         if center == most_dense:
             recommend = np.append(recommend, Y_labels[i])
 
+
     return recommend
 
+
+def plotClusters(X, labels):
+    plt.scatter(X[:,0],X[:,1])
+
+    #Getting unique labels
+    u_labels = np.unique(labels)
+ 
+#plotting the results:
+    for i in u_labels:
+        plt.scatter(X[labels == i , 0] , X[labels == i , 1] , label = i)
+    plt.legend()
+    plt.show()
+    
