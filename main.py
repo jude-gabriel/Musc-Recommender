@@ -11,6 +11,8 @@ import music_loader as ml
 #ml.load_wav()
    
 train, test = fl.getFeatures()
+print(train.shape)
+print(test.shape)
 
 # Run k-means
 songs_to_recommend = cl.kmeans(train, test)

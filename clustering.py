@@ -12,7 +12,7 @@ def kmeans(train, test):
 
 
     # Run kmeans
-    num_clusters = 3
+    num_clusters = 2
     kmeans = KMeans(n_clusters=num_clusters, random_state=0).fit(X)
     labels = kmeans.fit_predict(X)
     plotClusters(X, X_labels, labels, num_clusters)
@@ -29,6 +29,7 @@ def kmeans(train, test):
 
     # Count how many points per each centroid. Most dense will have most points
     most_dense = np.argmax(count)
+
 
     # Predict each item in test set
     recommend = np.array([])
