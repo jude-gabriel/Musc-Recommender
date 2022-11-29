@@ -4,6 +4,8 @@ import clustering as cl
 
 # Get the train and test data
 train, test = fl.getFeatures()
+print(train.shape)
+print(test.shape)
 
 
 # Run k-means
