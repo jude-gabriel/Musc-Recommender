@@ -5,10 +5,11 @@ from sklearn.decomposition import PCA
 
 def getFeatures():
     features = np.loadtxt("features.txt", delimiter=",", dtype='str')
+    print(features.shape)
     feature_vecs = features[:, 0:len(features[0]) - 1].astype(float)
     feature_names = features[:, len(features[0]) - 1]
 
-    pca_model = PCA(n_components=0.9)
+    pca_model = PCA(n_components=0.99)
     pca_vals = pca_model.fit_transform(feature_vecs)
     features = np.concatenate((pca_vals, feature_names.reshape(-1, 1)), axis=1)
 
@@ -16,6 +17,8 @@ def getFeatures():
     print('variance: ', pca_model.explained_variance_)
     print('variance ratio: ', pca_model.explained_variance_ratio_)
     print('cumulative sum of variance: ', pca_model.explained_variance_.cumsum())
+
+    print(features.shape)
 
     train, test = train_test_split(features, test_size=0.2)
 
