@@ -1,13 +1,11 @@
 import feature_loader as fl
 import clustering as cl
 import music_loader as ml
-
+import matplotlib.pyplot as plt
 # Get the train and test data
 #Checks if feature text file exists,
 #if not creates file from wav
 
-
-#ml.load_wav()
    
 train, test = fl.getFeatures()
 
@@ -15,4 +13,5 @@ train, test = fl.getFeatures()
 songs_to_recommend = cl.kmeans(train, test)
 print("Songs to Recommend:", songs_to_recommend)
 
-#ok
+plt.show()
+
