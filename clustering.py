@@ -27,10 +27,12 @@ def kmeans(train, test):
         count[center] = count[center] + 1
 
     # Count how many points per each centroid. Most dense will have most points
+
+    
+
+
     most_dense = np.argmax(count)
     print("Most Dense Cluster: Cluster " + str(most_dense))
-
-    recommend = np.array([])
 
     # Predict each song in the test split. If it is in the most dense cluster, add to songs to recommend
     # Get labels for graphing final clusters and songs to recommend
@@ -91,6 +93,7 @@ def plotClusters(X, X_labels, labels, num_clusters, plot_labels):
 
 
 def plotResults(X, labels, title):
+    plt.figure()
     # Run TSNE for dimensionality reduction
     X_embedded = TSNE(n_components=2, perplexity=3, init='random', learning_rate='auto').fit_transform(X)
     plt.scatter(X_embedded[:, 0], X_embedded[:, 1])
@@ -103,5 +106,5 @@ def plotResults(X, labels, title):
         plt.scatter(X_embedded[labels == i, 0], X_embedded[labels == i, 1], label=i)
     plt.legend()
     plt.title(title)
-    plt.show()
+
 
