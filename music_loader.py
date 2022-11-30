@@ -2,7 +2,9 @@ import librosa
 import numpy as np
 import os
 
+
 def load_wav():
+    # Load in songs
     files = librosa.util.find_files('./songs')
     files = np.asarray(files)
     features = np.array([])
@@ -11,13 +13,8 @@ def load_wav():
     for file in files:
         print(file)
         y, sr = librosa.load(file)
-
-        # calls function to extract features, 2 feature function exist currently
         feature_vec = get_features(y, sr, file)
-
-        # Append to the features list as a row
         features = np.append(features, feature_vec, axis=0)
-
     features = features.reshape(files.size, int(len(features) / files.size))
 
     # to reduce textfile length, all feature vectors become 32bit floats
@@ -27,7 +24,6 @@ def load_wav():
 
 
 
-# Nick's features
 def get_features(y, sr, file):
     # pad y to be length (will lengthen short songs and shorten long songs)
     y_pad = librosa.util.fix_length(y, size=sr * 250)
@@ -64,7 +60,7 @@ def get_features(y, sr, file):
     feature_vec = np.append(feature_vec, chroma_vec)
     feature_vec = np.append(feature_vec, tonnetz_vec)
 
-    # We need file name in feature vector, so we can check what song it is later
+    # Add file names to keep track of songs
     feature_vec = np.append(feature_vec, str(file))
     return feature_vec
 
