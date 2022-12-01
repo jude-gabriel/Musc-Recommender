@@ -45,12 +45,12 @@ def kmeans(train, test):
         # Update iter = iter + 1. i.e. if iter is 1 you find the second most dense.Update most dense to be the next most dense
 
     sorted_clusters = -np.sort(-count)
-    cluster_index = 0
+    sorted_cluster_index = 0
 
     while(recommend.shape[0] == 0):
         for i in range(len(Y_labels)):
             center = kmeans.predict(np.array([Y[i]]))
-            if np.where(sorted_clusters[cluster_index] == center):
+            if np.where(sorted_clusters[sorted_cluster_index] == center):
                 recommend = np.append(recommend, Y_labels[i])
                 recommend_labels = np.append(recommend_labels, -1)
             else:
@@ -63,7 +63,7 @@ def kmeans(train, test):
             recommend = np.array([])
             test_labels = np.array([])
             recommend_labels = np.array([])
-            cluster_index = cluster_index + 1
+            sorted_cluster_index = sorted_cluster_index + 1
 
     # Plot final clusters and songs to recommend
     test_labels = np.append(labels, test_labels)
@@ -74,7 +74,7 @@ def kmeans(train, test):
 
     # Return list of songs to recommend
 
-    print("Cluster Index for recommended songs: ", cluster_index)
+    print("Sorted Cluster Index: ", sorted_cluster_index)
     return recommend
 
 
