@@ -9,6 +9,7 @@ def getFeatures():
     feature_vecs = features[:, 0:len(features[0]) - 1].astype(float)
     feature_names = features[:, len(features[0]) - 1]
 
+
     # Run PCA to capture 99% of variance
     pca_model = PCA(n_components=0.99)
     pca_vals = pca_model.fit_transform(feature_vecs)

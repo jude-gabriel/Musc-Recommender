@@ -28,8 +28,6 @@ def kmeans(train, test):
 
     # Count how many points per each centroid. Most dense will have most points
 
-    
-
 
     most_dense = np.argmax(count)
     print("Most Dense Cluster: Cluster " + str(most_dense))
@@ -39,14 +37,28 @@ def kmeans(train, test):
     recommend = np.array([])
     test_labels = np.array([])
     recommend_labels = np.array([])
-    for i in range(len(Y_labels)):
-        center = kmeans.predict(np.array([Y[i]]))
-        if center == most_dense:
-            recommend = np.append(recommend, Y_labels[i])
-            recommend_labels = np.append(recommend_labels, -1)
-        else:
-            recommend_labels = np.append(recommend_labels, center)
-        test_labels = np.append(test_labels, center)
+
+    # iter = 0
+    #while reccomend songs is empty
+        # Find your "most dense cluster"
+        # Run the for loop with the most dense
+        # Update iter = iter + 1. i.e. if iter is 1 you find the second most dense.Update most dense to be the next most dense
+
+    sorted_clusters = -np.sort(-count)
+    cluster_index = 0
+
+    while(recommend.shape[0] == 0):
+        for i in range(len(Y_labels)):
+            center = kmeans.predict(np.array([Y[i]]))
+            if np.where(sorted_clusters[cluster_index] == center):
+                recommend = np.append(recommend, Y_labels[i])
+                recommend_labels = np.append(recommend_labels, -1)
+            else:
+                recommend_labels = np.append(recommend_labels, center)
+            test_labels = np.append(test_labels, center)
+        
+        if(recommend.shape[0] == 0):
+            cluster_index = cluster_index + 1
 
     # Plot final clusters and songs to recommend
     test_labels = np.append(labels, test_labels)
@@ -56,6 +68,8 @@ def kmeans(train, test):
     plotResults(data, get_labels("RECOMMEND", recommend_labels, most_dense), "Songs to Recommend")
 
     # Return list of songs to recommend
+
+    print("Cluster Index: ", cluster_index)
     return recommend
 
 
