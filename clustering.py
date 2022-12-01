@@ -57,6 +57,8 @@ def kmeans(train, test):
                 recommend_labels = np.append(recommend_labels, center)
             test_labels = np.append(test_labels, center)
         
+        #If center is in largest cluster, we don't want to increment 
+        #cluster index since while loop will only run once
         if(recommend.shape[0] == 0):
             cluster_index = cluster_index + 1
 
@@ -69,7 +71,7 @@ def kmeans(train, test):
 
     # Return list of songs to recommend
 
-    print("Cluster Index: ", cluster_index)
+    print("Cluster Index for recommended songs: ", cluster_index)
     return recommend
 
 
