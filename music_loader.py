@@ -26,7 +26,6 @@ def load_wav():
         np.savetxt(outfile, features, delimiter=',', fmt='%s')
 
 
-
 # get features 1
 def get_features1(y, sr, file):
     # pad y to be length (will lengthen short songs and shorten long songs)
@@ -67,5 +66,6 @@ def get_features1(y, sr, file):
     # We need file name in feature vector, so we can check what song it is later
     feature_vec = np.append(feature_vec, str(file))
     return feature_vec
+
 
 load_wav()

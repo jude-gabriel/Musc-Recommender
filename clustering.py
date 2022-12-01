@@ -60,6 +60,9 @@ def kmeans(train, test):
         #If center is in largest cluster, we don't want to increment 
         #cluster index since while loop will only run once
         if(recommend.shape[0] == 0):
+            recommend = np.array([])
+            test_labels = np.array([])
+            recommend_labels = np.array([])
             cluster_index = cluster_index + 1
 
     # Plot final clusters and songs to recommend
