@@ -12,7 +12,7 @@ def kmeans(train, test):
     Y_labels = test[:, len(test[0]) - 1]
 
     # Run kmeans
-    num_clusters = 3
+    num_clusters = 4
     kmeans = KMeans(n_clusters=num_clusters, random_state=0, init='k-means++').fit(X)
 
     # Get the labels and plot the initial clusters
