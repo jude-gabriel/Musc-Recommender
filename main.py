@@ -1,12 +1,25 @@
+import music_loader as ml
 import feature_loader as fl
 import clustering as cl
 import genre_analysis as ga
 
-# Get the train and test data
-train, test = fl.getFeatures()
+# Create the feature files
+hasFeatures = input("Are feature files made? 1 for yes, 0 for no: ")
+if hasFeatures == '0':
+    ml.music_loader()
 
-# Run k-means to get list of songs to recommend
-initial_clusters, initial_labels, final_clusters, final_labels = cl.kmeans(train, test)
+# For each set of features do clustering to get recommended songs and then find sub genres within clusters
+features = ['features1.txt', 'features2.txt', 'features3.txt', 'features4.txt']
+count = 1
+for feature in features:
+    print("\n\nFeature set " + str(count))
+    count = count + 1
 
-# Do genre analysis to determine before and after sub-genres
-ga.analysis(initial_clusters, initial_labels, final_clusters, final_labels)
+    # Get the train and test data
+    train, test = fl.getFeatures(feature)
+
+    # Run k-means to get list of songs to recommend
+    initial_clusters, initial_labels, final_clusters, final_labels = cl.kmeans(train, test)
+
+    # Do genre analysis to determine before and after sub-genres
+    ga.analysis(initial_clusters, initial_labels, final_clusters, final_labels)
