@@ -2,6 +2,7 @@ import librosa
 import numpy as np
 import os
 
+
 def load_wav(filename, feature_set):
     files = librosa.util.find_files('./songs')
     files = np.asarray(files)

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 
 
+
 def kmeans(train, test):
     # Get the features
     X = train[:, 0:len(train[0]) - 1].astype(float)
