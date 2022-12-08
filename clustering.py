@@ -38,19 +38,27 @@ def kmeans(train, test):
     recommend = np.array([])
     test_labels = np.array([])
     recommend_labels = np.array([])
-    for i in range(len(Y_labels)):
-        center = kmeans.predict(np.array([Y[i]]))
-        songs_centroid = kmeans.cluster_centers_[center]
+    sorted_clusters = -np.sort(-count)
+    sorted_cluster_index = 0
+    while recommend.shape[0] == 0:
+        for i in range(len(Y_labels)):
+            center = kmeans.predict(np.array([Y[i]]))
+            songs_centroid = kmeans.cluster_centers_[center]
 
-        # Get the centroid for the centers label
-        # Get the most dense cluster
-        # Get the points in the most dense cluster
-        if nearest_neighbors(Y[i], center, songs_centroid, most_dense, most_dense_points):
-            recommend = np.append(recommend, Y_labels[i])
-            recommend_labels = np.append(recommend_labels, -1)
-        else:
-            recommend_labels = np.append(recommend_labels, center)
-        test_labels = np.append(test_labels, center)
+            # Get the centroid for the centers label
+            # Get the most dense cluster
+            # Get the points in the most dense cluster
+            if nearest_neighbors(Y[i], center, songs_centroid, sorted_clusters, sorted_cluster_index, most_dense_points):
+                recommend = np.append(recommend, Y_labels[i])
+                recommend_labels = np.append(recommend_labels, -1)
+            else:
+                recommend_labels = np.append(recommend_labels, center)
+            test_labels = np.append(test_labels, center)
+        if recommend[0].shape == 0:
+            recommend = np.array([])
+            test_labels = np.array([])
+            recommend_labels = np.array([])
+            sorted_cluster_index = sorted_cluster_index + 1
 
     # Plot final clusters and songs to recommend
     test_labels = np.append(labels, test_labels)
@@ -93,9 +101,9 @@ def get_most_most_dense_points(most_dense, labels, points):
     return most_dense_points
 
 
-def nearest_neighbors(song, songs_label, songs_centroid, most_dense_label, most_dense_points):
+def nearest_neighbors(song, songs_label, songs_centroid, sorted_clusters, sorted_cluster_index, most_dense_points):
     # If it is classified in the most dense centroid then skip. Already recommended
-    if songs_label == most_dense_label:
+    if np.where(sorted_clusters[sorted_cluster_index]) == songs_label:
         print("Added by label")
         return True
     # Then measure the distance from the point to its centroid
