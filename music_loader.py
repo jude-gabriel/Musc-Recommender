@@ -22,7 +22,6 @@ def load_wav():
         np.savetxt(outfile, features, delimiter=',', fmt='%s')
 
 
-
 def get_features(y, sr, file):
     # pad y to be length (will lengthen short songs and shorten long songs)
     y_pad = librosa.util.fix_length(y, size=sr * 250)
