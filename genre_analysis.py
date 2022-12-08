@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import dendrogram, linkage
 
 
-
 def analysis(initial_clusters, initial_labels, final_clusters, final_labels):
     for i in range(len(initial_clusters)):
         # Initial Clusters: Plot the dendrogram to observe the sub clusters
