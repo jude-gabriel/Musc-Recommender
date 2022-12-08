@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 
 
+
+
 def kmeans(train, test):
     # Get the features
     X = train[:, 0:len(train[0]) - 1].astype(float)
@@ -54,11 +56,13 @@ def kmeans(train, test):
             else:
                 recommend_labels = np.append(recommend_labels, center)
             test_labels = np.append(test_labels, center)
-        if recommend[0].shape == 0:
+        if recommend.size == 0:
             recommend = np.array([])
             test_labels = np.array([])
             recommend_labels = np.array([])
             sorted_cluster_index = sorted_cluster_index + 1
+        if sorted_cluster_index == sorted_clusters.size:
+            break
 
     # Plot final clusters and songs to recommend
     test_labels = np.append(labels, test_labels)
@@ -66,7 +70,10 @@ def kmeans(train, test):
     data = np.append(X, Y, axis=0)
     plotResults(data, get_labels("TEST_RESULTS", test_labels, most_dense), "Clusters with Test Songs")
     plotResults(data, get_labels("RECOMMEND", recommend_labels, most_dense), "Songs to Recommend")
-    print("Songs to Recommend:", recommend)
+    if recommend.size == 0:
+        print("Could not find songs to recommend")
+    else:
+        print("Songs to Recommend:", recommend)
 
     # Get return initial and final cluster for sub-genre analysis
     final_data, final_labels = get_final_clusters(X, Y, X_labels, Y_labels, test_labels, num_clusters)
@@ -106,8 +113,10 @@ def nearest_neighbors(song, songs_label, songs_centroid, sorted_clusters, sorted
     if np.where(sorted_clusters[sorted_cluster_index]) == songs_label:
         print("Added by label")
         return True
+
     # Then measure the distance from the point to its centroid
     dist_to_centroid = np.linalg.norm(song - songs_centroid)
+
     # Then measure the distance to points in most dense cluster
     dist_to_dense_points = np.array([])
     for i in range(most_dense_points[:, 0].size):
