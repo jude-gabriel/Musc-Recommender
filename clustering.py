@@ -75,7 +75,7 @@ def kmeans(train, test):
 
     # Get return initial and final cluster for sub-genre analysis
     final_data, final_labels = get_final_clusters(X, Y, X_labels, Y_labels, test_labels, num_clusters)
-    return inital_data, initial_labels, final_data, final_labels
+    return inital_data, initial_labels, final_data, final_labels, most_dense
 
 
 def get_final_clusters(X, Y, X_labels, Y_labels, which_cluster, num_clusters):
