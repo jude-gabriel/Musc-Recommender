@@ -2,7 +2,7 @@ import music_loader as ml
 import feature_loader as fl
 import clustering as cl
 import genre_analysis as ga
-
+import minDistance as md
 
 # Create the feature files
 hasFeatures = input("Are feature files made? 1 for yes, 0 for no: ")
@@ -20,7 +20,10 @@ for feature in features:
     train, test = fl.getFeatures(feature)
 
     # Run k-means to get list of songs to recommend
-    initial_clusters, initial_labels, final_clusters, final_labels = cl.kmeans(train, test)
+    initial_clusters, initial_labels, final_clusters, final_labels, most_dense = cl.kmeans(train, test)
 
     # Do genre analysis to determine before and after sub-genres
     ga.analysis(initial_clusters, initial_labels, final_clusters, final_labels)
+
+    # Run k-means and use closest based on distance to recommend 5 songs
+    md.getMindDistances(train, test, most_dense)
